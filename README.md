@@ -187,7 +187,7 @@ The Symbol property is **hidden** and is **not included** in the result.
 ## Example
 
 ```javascript
-let id = Symbol("id");
+let id = Symbol();
 
 let student = {
     name: "John"
@@ -208,25 +208,7 @@ John
 ["name"]
 ```
 
----
-
-# Non-Primitive Data Type
-
-## Object
-
-```javascript
-let student = {
-    name: "John",
-    age: 20
-};
-```
-
-Objects store collections of related data.
-
----
-
 # Without Symbol
-
 ```javascript
 let student = {
     name: "John"
@@ -435,27 +417,3 @@ are completely different properties.
 
 Nothing gets overwritten.
 
----
-
-# Difference Between String Keys and Symbol Keys
-
-| String Key | Symbol Key |
-|------------|------------|
-| Property name is a string. | Property name is a Symbol. |
-| Can be accidentally overwritten if another code uses the same key. | Always unique, so no accidental overwrite. |
-| Visible in `Object.keys()`. | Hidden from `Object.keys()`. |
-| Accessed using `obj.id` or `obj["id"]`. | Accessed using `obj[symbolVariable]`. |
-| Best for normal object properties. | Best for unique/internal properties. |
-
----
-
-# Key Points
-
-- Symbol is a **primitive data type**.
-- Every Symbol is **unique**.
-- The description is only for debugging.
-- Symbol values cannot be recreated by using the same description.
-- Symbols are mainly used as **unique object property keys**.
-- Symbol properties are not returned by `Object.keys()`.
-- Symbol keys must be accessed using **bracket notation**.
-- Symbols prevent accidental property name conflicts and overwriting.
