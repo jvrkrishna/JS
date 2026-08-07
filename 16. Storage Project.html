@@ -1,173 +1,61 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Internship Form</title>
-</head>
 <body>
 
-<form id="internshipForm">
-<fieldset>
-<legend><h1>Internship Form</h1></legend>
+Name:
+<input type="text" id="name"><br><br>
 
-<table>
+Email:
+<input type="email" id="email"><br><br>
 
-<tr>
-<td>Name:</td>
-<td><input type="text" id="name" placeholder="Enter Name" required></td>
-</tr>
+Password:
+<input type="password" id="password"><br><br>
 
-<tr>
-<td>Email:</td>
-<td><input type="email" id="email" placeholder="Enter Mail Id"></td>
-</tr>
+Phone:
+<input type="text" id="phone"><br><br>
 
-<tr>
-<td>Password:</td>
-<td><input type="password" id="password" placeholder="Enter Password"></td>
-</tr>
+DOB:
+<input type="date" id="dob"><br><br>
 
-<tr>
-<td>Phone Number:</td>
-<td><input type="text" id="phone" value="+91 "></td>
-</tr>
+Gender:
+<input type="radio" name="gender" value="Male">Male
+<input type="radio" name="gender" value="Female">Female
+<br><br>
 
-<tr>
-<td>Date of Birth:</td>
-<td><input type="date" id="dob"></td>
-</tr>
+<button onclick="saveData()">Save</button>
+<button onclick="showData()">Show</button>
+<button onclick="removeData()">Remove</button>
 
-<tr>
-<td>Gender:</td>
-<td>
-<input type="radio" name="gender" value="Male"> Male
-<input type="radio" name="gender" value="Female"> Female
-</td>
-</tr>
+<br><br>
 
-<tr>
-<td>Address:</td>
-<td><textarea id="address" rows="4" cols="35"></textarea></td>
-</tr>
-
-<tr>
-<td>Known Languages:</td>
-<td>
-<input type="checkbox" name="language" value="Telugu"> Telugu
-<input type="checkbox" name="language" value="English"> English
-<input type="checkbox" name="language" value="Hindi"> Hindi
-</td>
-</tr>
-
-<tr>
-<td>Your Qualification:</td>
-<td>
-<input type="radio" name="qualification" value="SSC"> SSC
-<input type="radio" name="qualification" value="Inter"> Inter
-<input type="radio" name="qualification" value="UG"> UG
-<input type="radio" name="qualification" value="PG"> PG
-</td>
-</tr>
-
-<tr>
-<td>Marks Scored:</td>
-<td><input type="number" id="marks" min="5" max="10"></td>
-</tr>
-
-<tr>
-<td>Duration:</td>
-<td>
-<select id="duration">
-<option>Select</option>
-<option>3 Months</option>
-<option>6 Months</option>
-<option>1 Year</option>
-</select>
-</td>
-</tr>
-
-<tr>
-<td>Resume:</td>
-<td><input type="file" id="resume"></td>
-</tr>
-
-<tr>
-<td>Price:</td>
-<td><input type="range" id="price" min="0" max="100" step="2"></td>
-</tr>
-
-<tr>
-<td colspan="2">
-<button type="submit">Register</button>
-</td>
-</tr>
-
-</table>
-</fieldset>
-</form>
-
-<h2>Entered Details</h2>
 <div id="output"></div>
 
 <script>
-document.getElementById("internshipForm").addEventListener("submit", function(e) {
+function saveData() {
+    localStorage.setItem("name", document.getElementById("name").value);
+    localStorage.setItem("email", document.getElementById("email").value);
+    localStorage.setItem("password", document.getElementById("password").value);
+    localStorage.setItem("phone", document.getElementById("phone").value);
+    localStorage.setItem("dob", document.getElementById("dob").value);
 
-    e.preventDefault(); // Prevent page refresh
+    let gender = document.querySelector('input[name="gender"]:checked').value;
+    localStorage.setItem("gender", gender);
 
-    // Get values
-    let name = document.getElementById("name").value;
-    let email = document.getElementById("email").value;
-    let password = document.getElementById("password").value;
-    let phone = document.getElementById("phone").value;
-    let dob = document.getElementById("dob").value;
-    let address = document.getElementById("address").value;
-    let marks = document.getElementById("marks").value;
-    let duration = document.getElementById("duration").value;
-    let price = document.getElementById("price").value;
+    document.getElementById("output").innerHTML = "Data Saved Successfully!";
+}
 
-    let gender = document.querySelector('input[name="gender"]:checked')?.value;
+function showData() {
+    document.getElementById("output").innerHTML =
+        "Name: " + localStorage.getItem("name") + "<br>" +
+        "Email: " + localStorage.getItem("email") + "<br>" +
+        "Password: " + localStorage.getItem("password") + "<br>" +
+        "Phone: " + localStorage.getItem("phone") + "<br>" +
+        "DOB: " + localStorage.getItem("dob") + "<br>" +
+        "Gender: " + localStorage.getItem("gender");
+}
 
-    let qualification = document.querySelector('input[name="qualification"]:checked')?.value;
-
-    let languages = [];
-    document.querySelectorAll('input[name="language"]:checked').forEach(function(item) {
-        languages.push(item.value);
-    });
-
-    // Store in localStorage
-    let formData = {
-        name,
-        email,
-        password,
-        phone,
-        dob,
-        gender,
-        address,
-        languages,
-        qualification,
-        marks,
-        duration,
-        price
-    };
-
-    localStorage.setItem("internshipData", JSON.stringify(formData));
-
-    // Print data
-    document.getElementById("output").innerHTML = `
-        <h3>Registration Details</h3>
-        <p><b>Name:</b> ${name}</p>
-        <p><b>Email:</b> ${email}</p>
-        <p><b>Phone:</b> ${phone}</p>
-        <p><b>DOB:</b> ${dob}</p>
-        <p><b>Gender:</b> ${gender}</p>
-        <p><b>Address:</b> ${address}</p>
-        <p><b>Languages:</b> ${languages.join(", ")}</p>
-        <p><b>Qualification:</b> ${qualification}</p>
-        <p><b>Marks:</b> ${marks}</p>
-        <p><b>Duration:</b> ${duration}</p>
-        <p><b>Price:</b> ${price}</p>
-    `;
-});
+function removeData() {
+    localStorage.clear();
+    document.getElementById("output").innerHTML = "Data Removed Successfully!";
+}
 </script>
 
 </body>
-</html>
